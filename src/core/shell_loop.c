@@ -12,7 +12,7 @@
 #include "shell.h"
 #include "commands.h"
 #include "utils.h"
-
+#include "history.h"
 /*
  * --- Registro de Comandos ---
  * Para evitar una larga cadena de 'if-else if-else', usamos dos arreglos paralelos:
@@ -29,7 +29,10 @@ char *nombres_comandos[] = {
     "calc",
     "ayuda",
     "crear", // Agregue el comando "crear" al registro de comandos 
-    "salir"
+    "renombrar", // Agregue el comando "renombrar" al registro de comandos
+    "eliminar", // Agregue el comando "eliminar" al registro de comandos
+    "historial", // Agregue el comando "historial" al registro de comandos
+    "salir",
 };
 
 /*
@@ -40,11 +43,14 @@ char *nombres_comandos[] = {
 void (*func_comandos[]) (char **) = {
     &cmd_listar,
     &cmd_leer,
-    &cmd_tiempo,
-    &cmd_calc,
-    &cmd_ayuda,
+    &cmd_tiempo, 
+    &cmd_calc,  
+    &cmd_ayuda, 
     &cmd_crear, // Agregue el puntero a la función cmd_crear al registro de comandos
-    &cmd_salir
+    &cmd_renombrar, // Agregue el puntero a la función cmd_renombrar al registro de comandos
+    &cmd_eliminar, // Agregue el puntero a la función cmd_eliminar al registro de comandos
+    &cmd_historial, // Agregue el puntero a la función cmd_historial al registro de comandos
+    &cmd_salir, // Agregue el puntero a la función cmd_salir al registro de comandos
 };
 
 /**
@@ -105,6 +111,11 @@ void loop_shell() {
         // 2. Parseo
         args = parsear_linea(linea);
         
+        // 🔹 GUARDAR EN HISTORIAL (ANTES DE EJECUTAR)
+        if (args[0] != NULL && strcmp(args[0], "historial") != 0)
+        {
+            guardar_historial(linea);
+        }
         // 3. Ejecución
         ejecutar(args);
         

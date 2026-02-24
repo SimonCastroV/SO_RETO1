@@ -50,11 +50,24 @@ void cmd_salir(char **args);
  * Uso: crear <archivo>
  */
 void cmd_crear(char **args);
-/**
- * @brief Retorna el número total de comandos registrados.
+ /**
+ * @brief Renombra un archivo existente.
  * @return int Cantidad de comandos.
  */
-int num_comandos();
 
+void cmd_renombrar(char **args);
+  /** 
+    * @brief Elimina un archivo existente.
+    * @return int Cantidad de comandos.
+    */
+void cmd_eliminar(char **args);
+
+/**
+ * @brief Muestra el historial de comandos ingresados.
+ * @return int Cantidad de comandos.
+ */
+void cmd_historial(char **args);
+
+int num_comandos();
 
 #endif

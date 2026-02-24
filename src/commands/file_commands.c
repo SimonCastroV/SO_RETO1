@@ -12,6 +12,7 @@
 #include <dirent.h> // Librería POSIX para manejo de directorios
 #include "commands.h"
 #include "utils.h"
+#include "history.h" // Para cmd_historial
 
 /**
  * @brief Comando LISTAR (ls)
@@ -101,11 +102,76 @@ void cmd_crear(char **args)
 
     FILE *fp = fopen(args[1], "w");
     if (fp == NULL)
-    {
+    {   
         perror("crear");
         return;
     }
 
     fclose(fp);
     printf(COLOR_BLUE "Archivo '%s' creado correctamente.\n" COLOR_RESET, args[1]);
+}
+
+void cmd_renombrar(char **args)
+{
+    if (args[1] == NULL || args[2] == NULL)
+    {
+        printf("Uso: renombrar <viejo> <nuevo>\n");
+        return;
+    }
+
+    if (rename(args[1], args[2]) != 0)
+    {
+        perror("renombrar");
+        return;
+    }
+
+    printf(COLOR_BLUE "Archivo '%s' renombrado a '%s' correctamente.\n" COLOR_RESET,
+           args[1], args[2]);
+}
+
+void cmd_eliminar(char **args)
+{
+    if (args[1] == NULL)
+    {
+        printf("Uso: eliminar <archivo>\n");
+        return;
+    }
+
+    char opcion;
+    printf("¿Seguro que deseas eliminar '%s'? (s/n): ", args[1]);
+    scanf(" %c", &opcion);
+
+    if (opcion != 's' && opcion != 'S')
+    {
+        printf("Operación cancelada.\n");
+        return;
+    }
+
+    if (remove(args[1]) != 0)
+    {
+        perror("eliminar");
+        return;
+    }
+
+    printf(COLOR_RED "Archivo '%s' eliminado correctamente.\n" COLOR_RESET, args[1]);
+}
+void cmd_historial(char **args)
+{
+    (void)args; // no se usan argumentos
+
+    if (hist_count == 0)
+    {
+        printf("Historial vacío.\n");
+        return;
+    }
+
+    int total = hist_count < HIST_SIZE ? hist_count : HIST_SIZE;
+    int inicio = hist_count - total;
+
+    printf(COLOR_BLUE "Últimos %d comandos:\n" COLOR_RESET, total);
+
+    for (int i = inicio; i < hist_count; i++)
+    {
+        printf("%d: %s\n", i + 1, historial[i % HIST_SIZE]);
+    }
 }
