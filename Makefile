@@ -20,7 +20,7 @@ SRC_DIR = src
 BUILD_DIR = build
 
 # Nombre del ejecutable final
-TARGET = $(BUILD_DIR)/eafitos
+TARGET = $(BUILD_DIR)/sistema_os
 
 # ------------------------------------------------------------------------------
 # Búsqueda de Archivos Fuente
