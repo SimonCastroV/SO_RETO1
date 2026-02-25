@@ -175,3 +175,4 @@ void cmd_historial(char **args)
         printf("%d: %s\n", i + 1, historial[i % HIST_SIZE]);
     }
 }
+// prueba commit Samuel
