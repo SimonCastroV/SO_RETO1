@@ -94,7 +94,11 @@ historial
 
 ```bash
 make
-./eafitos
+./build/sistema_os
+```
+
+```bash
+make run
 ```
 
 > Nota: dependiendo de la configuración, el ejecutable puede generarse en `/build`.
