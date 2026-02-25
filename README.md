@@ -7,8 +7,8 @@ Permite aprender fundamentos de programación de sistemas y simula el comportami
 
 ## 👥 Integrantes
 
-* Samuel Herrera
-* [Nombre de tu compañero]
+* Samuel Herrera Galvis
+* Simón Castro Valencia
 
 ---
 
